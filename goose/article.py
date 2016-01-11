@@ -34,6 +34,8 @@ class Article(object):
         # This is probably what you want to use.
         self.cleaned_text = u""
 
+        self.text_nodes = []
+
         # meta description field in HTML source
         self.meta_description = u""
 
@@ -121,6 +123,7 @@ class Article(object):
             "domain": self.domain,
             "title": self.title,
             "cleaned_text": self.cleaned_text,
+            "text_nodes": self.text_nodes,
             "opengraph": self.opengraph,
             "tags": self.tags,
             "tweets": self.tweets,

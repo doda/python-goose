@@ -68,26 +68,30 @@ class ContentExtractor(BaseExtractor):
 
         return False
 
-    def calculate_best_node(self):
-
+    def nodes_with_text(self):
         doc = self.article.doc
-        top_node = None
-        nodes_to_check = self.nodes_to_check(doc)
-
-        starting_boost = float(1.0)
-        cnt = 0
-        i = 0
-        parent_nodes = []
         nodes_with_text = []
 
-        for node in nodes_to_check:
+        for node in self.nodes_to_check(doc):
             text_node = self.parser.getText(node)
             word_stats = self.stopwords_class(language=self.get_language()).get_stopword_count(text_node)
             high_link_density = self.is_highlink_density(node)
             if word_stats.get_stopword_count() > 2 and not high_link_density:
                 nodes_with_text.append(node)
+        return nodes_with_text
 
+    def calculate_best_node(self):
+
+        top_node = None
+
+        starting_boost = float(1.0)
+        cnt = 0
+        i = 0
+        parent_nodes = []
+
+        nodes_with_text = self.nodes_with_text()
         nodes_number = len(nodes_with_text)
+
         negative_scoring = 0
         bottom_negativescore_nodes = float(nodes_number) * 0.25
 

@@ -166,6 +166,8 @@ class Crawler(object):
         # big stuff
         self.article.top_node = self.extractor.calculate_best_node()
 
+        self.article.text_nodes = self.extractor.nodes_with_text()
+
         # if we have a top node
         # let's process it
         if self.article.top_node is not None:
